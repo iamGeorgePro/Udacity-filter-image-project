@@ -33,9 +33,9 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
  // GET /filteredimage?image_url={{URL}}
   // endpoint to filter an image from a public url.
   app.get( "/filteredimage", async ( req, res) => {
-    const { image_url }: { image_url: string } = req.query; 
+    const { image_url } = req.query; 
 
-    // Validate the image_url query parameter
+    // check the image_url query character
     if (!image_url) {
       return res.sendStatus(400).send({ message: "Invalid url. Please provide correct url"});
     } 
@@ -43,21 +43,21 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
     // Filter the image
     filterImageFromURL(image_url)
-      .then(filteredImagePath => {
-        res.sendStatus(200).sendFile(filteredImagePath, err => {
-          if (err) {
-            return res.sendStatus(400).send( { message: err })
+      .then(image_url_path => {
+        res.sendStatus(200).sendFile(image_url_path, (err) => {
+         if (!err) { 
+          let filesList: string[] = [image_url_path];
           }
           else {
-            deleteLocalFiles([filteredImagePath]);
+            deleteLocalFiles([image_url_path]);
           }
         });
       })
       .catch(error => {
-        return res.sendStatus(422).send( { message: "Error in filtering image" } );
+        return res.status(422).send( { message: "Error in filtering image" } );
       }); 
 
-      res.download(image_url, async (error) => {
+      /*res.download(image_url, async (error) => {
         if (error) {
          return res.sendStatus(204).end();
         }
@@ -67,7 +67,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
         } catch (err) {
           console.log(err);
         }
-      });
+      }); */
     
   });
 
