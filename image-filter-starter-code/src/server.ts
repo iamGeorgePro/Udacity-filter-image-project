@@ -54,7 +54,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
         });
       })
       .catch(error => {
-        return res.sendStatus(404).send( { message: "Error in filtering image" } );
+        return res.sendStatus(422).send( { message: "Error in filtering image" } );
       }); 
 
       res.download(image_url, async (error) => {
