@@ -38,3 +38,19 @@ export async function deleteLocalFiles(files: Array<string>) {
     fs.unlinkSync(file);
   }
 }
+
+/*export const isValidImage = (image_url: string) => {
+  return image_url.match(/\.(jpeg|jpg|gif|png)$/)
+}
+
+export const isValidUrl = (image_url: string) => {
+  try {
+    new URL(image_url)
+    return true
+  } catch (error) {
+    console.error(error)
+    return false
+  }
+}
+
+*/
